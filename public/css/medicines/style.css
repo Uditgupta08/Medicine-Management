@@ -80,7 +80,11 @@ form {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 2%;
 }
+<<<<<<< HEAD
 @media (max-width: 650px) {
+=======
+@media (max-width: 500px) {
+>>>>>>> 1663f8fca85696df9b3e52978ff3ee67799fdd1b
   .card {
     width: 70vw;
   }

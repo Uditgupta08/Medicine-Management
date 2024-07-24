@@ -80,7 +80,7 @@ form {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 2%;
 }
-@media (min-width: 500px) {
+@media (max-width: 650px) {
   .card {
     width: 70vw;
   }
@@ -140,14 +140,17 @@ form {
   border-radius: 5%;
   align-self: center;
 }
+.dlt {
+  background-color: red;
+  cursor: pointer;
+}
+.editbut {
+  background-color: blue;
+}
 #edit-button {
   background-color: blue;
   color: white;
   text-decoration: none;
-  width: 40%;
   border-radius: 5%;
   align-self: center;
-}
-.card button {
-  background-color: red;
 }

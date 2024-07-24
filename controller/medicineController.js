@@ -1,50 +1,15 @@
 const Medicine = require("../models/medicine");
-const multer = require("multer");
-const path = require("path");
 const NodeCache = require("node-cache");
+const upload = require("../middleware/upload"); // Adjust the path as needed
 
 // Initialize cache with a TTL of 1 hour
 const cache = new NodeCache({ stdTTL: 3600 });
 
-// Configure multer for file uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, "../uploads"));
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  },
-});
-
-// Configure multer file filter for image uploads only
-const upload = multer({
-  storage: storage,
-  fileFilter: (req, file, cb) => {
-    const fileTypes = /jpeg|jpg|png/;
-    const extname = fileTypes.test(
-      path.extname(file.originalname).toLowerCase()
-    );
-    const mimetype = fileTypes.test(file.mimetype);
-    if (extname && mimetype) {
-      return cb(null, true);
-    } else {
-      cb("Error: Images Only!");
-    }
-  },
-}).single("imageUrl");
-
 // Get all medicines with optional filters and sorting
 const getAllMedicines = async (req, res) => {
   try {
-    const {
-      search,
-      priceRange,
-      quantityRange,
-      manufacturer,
-      sortByName,
-      sortByPrice,
-      sortByQuantity,
-    } = req.query;
+    const { search, manufacturer, sortByName, sortByPrice, sortByQuantity } =
+      req.query;
 
     // Build query object
     const query = {};
@@ -79,8 +44,6 @@ const getAllMedicines = async (req, res) => {
     res.render("medicines/index", {
       medicines,
       search,
-      priceRange,
-      quantityRange,
       manufacturer,
       sortByName,
       sortByPrice,
@@ -105,7 +68,7 @@ const createMedicine = async (req, res) => {
       return res.status(500).send("Server Error");
     }
     const { name, price, discountPrice, quantity, manufacturer } = req.body;
-    const imageUrl = req.file ? `/uploads/${req.file.filename}` : "";
+    const imageUrl = req.file ? req.file.path : "";
     try {
       const newMedicine = new Medicine({
         name,
@@ -145,9 +108,7 @@ const updateMedicine = async (req, res) => {
       return res.status(500).send("Server Error");
     }
     const { name, price, discountPrice, quantity, manufacturer } = req.body;
-    const imageUrl = req.file
-      ? `/uploads/${req.file.filename}`
-      : req.body.existingImageUrl;
+    const imageUrl = req.file ? req.file.path : req.body.existingImageUrl;
     try {
       await Medicine.findByIdAndUpdate(req.params.id, {
         name,

@@ -17,23 +17,18 @@
         <input type="text" id="manufacturer" name="manufacturer" value="<%= manufacturer || '' %>">
       </div>
       <div class="sort-options">
-        <!-- Sort By Name -->
         <label for="sortByName">Sort By Name:</label>
         <select id="sortByName" name="sortByName">
           <option value="">Select</option>
           <option value="name:asc" <%= sortByName === 'name:asc' ? 'selected' : '' %>>Name (A-Z)</option>
           <option value="name:desc" <%= sortByName === 'name:desc' ? 'selected' : '' %>>Name (Z-A)</option>
         </select>
-    
-        <!-- Sort By Price -->
         <label for="sortByPrice">Sort By Price:</label>
         <select id="sortByPrice" name="sortByPrice">
           <option value="">Select</option>
           <option value="price:asc" <%= sortByPrice === 'price:asc' ? 'selected' : '' %>>Price (Low-High)</option>
           <option value="price:desc" <%= sortByPrice === 'price:desc' ? 'selected' : '' %>>Price (High-Low)</option>
         </select>
-    
-        <!-- Sort By Quantity -->
         <label for="sortByQuantity">Sort By Quantity:</label>
         <select id="sortByQuantity" name="sortByQuantity">
           <option value="">Select</option>
@@ -58,9 +53,9 @@
           <p>Quantity: <%= medicine.quantity %></p>
           <p>Manufacturer: <%= medicine.manufacturer %></p>
           <div class="but">
-          <button type="submit" id="edit-button"><a id="edit-button" href="/medicines/<%= medicine._id %>/edit">Edit</a></button>
+          <button type="submit" class="editbut"><a id="edit-button" href="/medicines/<%= medicine._id %>/edit">Edit</a></button>
           <form action="/medicines/<%= medicine._id %>?_method=DELETE" method="POST" style="display: inline;">
-            <button type="submit">Delete</button>
+            <button type="submit" class="dlt">Delete</button>
           </form>
         </div>
         </div>
